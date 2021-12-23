@@ -53,6 +53,7 @@ func getUrlFile(data []scrape.ListDownload) string {
 
 func main() {
 	urlDownload := os.Args[1]
+	conf := config.ReadConfig()
 	u, err := url.Parse(urlDownload)
 	if err != nil {
 		fmt.Println("Url Tidak Valid")
@@ -64,7 +65,7 @@ func main() {
 	fmt.Println("[ Open URL ] >> ", urlDownload)
 	fmt.Println("[ Result   ] >> ", result)
 
-	err = exec.Command("xdg-open", result).Run()
+	err = exec.Command(conf.Browser, result).Run()
 	if err != nil {
 		fmt.Println(err.Error())
 		return
