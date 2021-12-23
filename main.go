@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"getdl/config"
 	"getdl/scrape"
 	"net/url"
 	"os"
@@ -31,25 +32,23 @@ func getResponse(u *url.URL) scrape.Response {
 // 	return result
 // }
 
-func getZippyshare(data []scrape.ListDownload) string {
+func getUrlFile(data []scrape.ListDownload) string {
+	conf := config.ReadConfig()
 	var result string
 	for _, d := range data {
-		if strings.Contains(d.Type, "265") {
+		if strings.Contains(d.Type, conf.Codec) {
 			for _, urlfile := range d.Downloads {
-				if strings.Contains(urlfile.Resolution, "720") {
+				if strings.Contains(urlfile.Resolution, conf.Resolution) {
 					for _, u := range urlfile.Links {
-						if strings.Contains(u.Label, "zippy") {
+						if strings.Contains(u.Label, conf.FileHosting) {
 							result = u.Link
 						}
 					}
-
 				}
 			}
 		}
-
 	}
 	return result
-
 }
 
 func main() {
@@ -60,13 +59,12 @@ func main() {
 		return
 	}
 
-	result := getResponse(u)
-	zippy := getZippyshare(result.Downloads)
+	result := getUrlFile(getResponse(u).Downloads)
 
 	fmt.Println("[ Open URL ] >> ", urlDownload)
-	fmt.Println("[ Result   ] >> ", zippy)
+	fmt.Println("[ Result   ] >> ", result)
 
-	err = exec.Command("xdg-open", zippy).Run()
+	err = exec.Command("xdg-open", result).Run()
 	if err != nil {
 		fmt.Println(err.Error())
 		return
