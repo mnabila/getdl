@@ -8,16 +8,16 @@ type Response struct {
 }
 
 type ListDownload struct {
-	Type      string     `json:"tipe"`
+	Codec      string     `json:"tipe"`
 	Downloads []Download `json:"downloads"`
 }
 
 type Download struct {
 	Resolution string  `json:"resolution"`
-	Links []Links `json:"links"`
+	Links []FileHosting `json:"links"`
 }
 
-type Links struct {
+type FileHosting struct {
 	Label string   `json:"label"`
 	Link  string `json:"link"`
 }

@@ -29,7 +29,7 @@ func Oploverz(link string) Response {
 	c.OnHTML("div.soraddlx", func(h *colly.HTMLElement) {
 		h.DOM.Each(func(_ int, s *goquery.Selection) {
 			ld := ListDownload{}
-			ld.Type = s.Find("h3").Text()
+			ld.Codec = s.Find("h3").Text()
 
 			s.Find("div.soraurlx").Each(func(_ int, s *goquery.Selection) {
 
@@ -38,7 +38,7 @@ func Oploverz(link string) Response {
 
 				s.Find("a").Each(func(_ int, s *goquery.Selection) {
 
-					d.Links = append(d.Links, Links{strings.ToLower(s.Text()), s.AttrOr("href", "")})
+					d.Links = append(d.Links, FileHosting{strings.ToLower(s.Text()), s.AttrOr("href", "")})
 				})
 
 				ld.Downloads = append(ld.Downloads, d)

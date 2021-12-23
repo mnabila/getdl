@@ -36,7 +36,7 @@ func getUrlFile(data []scrape.ListDownload) string {
 	conf := config.ReadConfig()
 	var result string
 	for _, d := range data {
-		if strings.Contains(d.Type, conf.Codec) {
+		if strings.Contains(d.Codec, conf.Codec) {
 			for _, urlfile := range d.Downloads {
 				if strings.Contains(urlfile.Resolution, conf.Resolution) {
 					for _, u := range urlfile.Links {

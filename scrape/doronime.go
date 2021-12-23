@@ -80,8 +80,8 @@ func Doronime(link string) Response {
 		h265 := ListDownload{}
 
 		tipe := h.DOM.Find("div.Download__title")
-		h264.Type = tipe.First().Text()
-		h265.Type = tipe.Last().Text()
+		h264.Codec = tipe.First().Text()
+		h265.Codec = tipe.Last().Text()
 
 		download := h.DOM.Find("div.Download__container")
 
@@ -95,7 +95,7 @@ func Doronime(link string) Response {
 					label := strings.ToLower(s.Find("span").First().Text())
 					ahref := s.AttrOr("href", "")
 
-					d.Links = append(d.Links, Links{label, ahref})
+					d.Links = append(d.Links, FileHosting{label, ahref})
 				})
 			})
 
@@ -113,7 +113,7 @@ func Doronime(link string) Response {
 					label := strings.ToLower(s.Find("span").First().Text())
 					ahref := s.AttrOr("href", "")
 
-					d.Links = append(d.Links, Links{label, ahref})
+					d.Links = append(d.Links, FileHosting{label, ahref})
 				})
 			})
 

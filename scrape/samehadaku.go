@@ -27,7 +27,7 @@ func Samehadaku(link string) Response {
 	c.OnHTML("div.download-eps", func(h *colly.HTMLElement) {
 		h.DOM.Each(func(_ int, s *goquery.Selection) {
 			ld := ListDownload{}
-			ld.Type = s.Find("p").Text()
+			ld.Codec = s.Find("p").Text()
 
 			s.Find("li").Each(func(_ int, s *goquery.Selection) {
 
@@ -36,7 +36,7 @@ func Samehadaku(link string) Response {
 
 				s.Find("a").Each(func(_ int, s *goquery.Selection) {
 
-					d.Links = append(d.Links, Links{strings.ToLower(s.Text()), s.AttrOr("href", "")})
+					d.Links = append(d.Links, FileHosting{strings.ToLower(s.Text()), s.AttrOr("href", "")})
 				})
 
 				ld.Downloads = append(ld.Downloads, d)
