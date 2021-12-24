@@ -2,7 +2,6 @@ package config_test
 
 import (
 	"encoding/json"
-	"fmt"
 	"getdl/config"
 	"testing"
 )
@@ -15,10 +14,20 @@ func structTojson(c config.Configuration) string {
 }
 
 func TestDefaultConfig(t *testing.T) {
-	fmt.Println(structTojson(config.DefaultConfig()))
+	t.Log(structTojson(config.DefaultConfig()))
 }
 
 func TestReadConfig(t *testing.T) {
-	fmt.Println(structTojson(config.ReadConfig()))
+	t.Log(structTojson(config.ReadConfig()))
+
+}
+
+func TestSetConfig(t *testing.T) {
+	t.Log(structTojson(config.SetConfig("browserrr", "kivi")))
+
+}
+
+func TestGetConfig(t *testing.T) {
+	t.Log(config.GetConfig("browser"))
 
 }

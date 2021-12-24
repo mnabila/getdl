@@ -6,9 +6,9 @@ gawe golek url download
 
 - [x] scrape data (judul, deskripsi, link download)
 - [x] simple command
-- [x] buat config format json 
+- [x] buat config format json
 - [ ] bypass shortlink
 - [ ] klok bisa async sih
-- [ ] tambah cobra biar enak management commandnya
+- [x] tambah cobra biar enak management commandnya
 - [ ] get direct file download
 - [ ] terintegrasi dengan aria2c
