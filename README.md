@@ -18,7 +18,6 @@ Usage:
    [command]
 
 Available Commands:
-  completion  Generate the autocompletion script for the specified shell
   config      Configuration
   get         Get url download
   help        Help about any command
