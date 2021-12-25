@@ -1,11 +1,11 @@
-GITCOMMIT = $(shell git rev-parse --short HEAD)
 VERSION = $(shell git describe --tags)
+FLAG = "-X getdl/cmd.Version=$(VERSION)"
 
 build:
-	go build -ldflags "-X getdl/cmd.Version=$(VERSION) -X getdl/cmd.Commit=$(GITCOMMIT)"
+	go build -ldflags $(FLAG)
 
 install:
-	go install -ldflags "-X getdl/cmd.Version=$(VERSION) -X getdl/cmd.Commit=$(GITCOMMIT)"
+	go install -ldflags $(FLAG)
 
 uninstall:
 	rm $(shell go env GOPATH)/bin/getdl
