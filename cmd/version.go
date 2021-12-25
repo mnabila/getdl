@@ -7,13 +7,14 @@ import (
 )
 
 var Version string
+var Commit string
 
 var versionCmd = &cobra.Command{
 	Use:   "version",
 	Short: "Print version",
 	Long:  "Print version information and exit ",
 	Run: func(_ *cobra.Command, _ []string) {
-		fmt.Printf("Version : %s\n", Version)
+		fmt.Printf("Version : %s (%s)\n", Version, Commit)
 	},
 }
 
