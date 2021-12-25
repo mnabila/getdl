@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
 	"getdl/config"
 	"getdl/scrape"
@@ -52,6 +53,7 @@ var getUrlCmd = &cobra.Command{
 			cmd.Help()
 			return
 		}
+
 		urlWeb := args[0]
 		conf := config.ReadConfig()
 
@@ -61,7 +63,16 @@ var getUrlCmd = &cobra.Command{
 			return
 		}
 
-		result := getUrlFile(getResponse(u).Downloads)
+		response := getResponse(u)
+
+		raw, _ := cmd.Flags().GetBool("raw")
+		if raw {
+			rawJson, _ := json.Marshal(response)
+			fmt.Println(string(rawJson))
+			return
+		}
+
+		result := getUrlFile(response.Downloads)
 
 		fmt.Println("[ Open URL ] >> ", urlWeb)
 		fmt.Println("[ Result   ] >> ", result)
@@ -76,5 +87,6 @@ var getUrlCmd = &cobra.Command{
 }
 
 func init() {
+	getUrlCmd.PersistentFlags().Bool("raw", false, "Print raw response in json")
 	RootCmd.AddCommand(getUrlCmd)
 }
