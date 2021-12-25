@@ -77,10 +77,11 @@ var getUrlCmd = &cobra.Command{
 		fmt.Println("[ Open URL ] >> ", urlWeb)
 		fmt.Println("[ Result   ] >> ", result)
 
-		err = exec.Command(conf.Browser, result).Run()
-		if err != nil {
-			fmt.Println(err.Error())
-			return
+		if result != "" && conf.OpenInBrowser == "true" {
+			if exec.Command(conf.Browser, result).Run(); err != nil {
+				fmt.Println(err.Error())
+				return
+			}
 		}
 
 	},

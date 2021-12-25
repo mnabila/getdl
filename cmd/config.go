@@ -53,7 +53,7 @@ var showConfigCmd = &cobra.Command{
 
 		reflectValue := reflect.ValueOf(config.ReadConfig())
 		reflectType := reflectValue.Type()
-		writer := tabwriter.NewWriter(os.Stdout, 0, 4, 1, '\t', tabwriter.AlignRight)
+		writer := tabwriter.NewWriter(os.Stdout, 0, 8, 1, '\t', tabwriter.AlignRight)
 		for i := 0; i < reflectType.NumField(); i++ {
 			fmt.Fprintf(writer, "%s\t: %s\n", reflectType.Field(i).Name, reflectValue.Field(i).Interface())
 		}

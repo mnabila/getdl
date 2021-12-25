@@ -11,10 +11,11 @@ import (
 var configPath = fmt.Sprintf("/home/%s/.config/getdl/config.json", os.Getenv("USER"))
 
 type Configuration struct {
-	Codec       string `json:"codec"`
-	Resolution  string `json:"resolution"`
-	FileHosting string `json:"file_hosting"`
-	Browser     string `json:"browser"`
+	Codec         string `json:"codec"`
+	Resolution    string `json:"resolution"`
+	FileHosting   string `json:"file_hosting"`
+	Browser       string `json:"browser"`
+	OpenInBrowser string `json:"open_in_browser"`
 }
 
 func DefaultConfig() Configuration {
@@ -23,6 +24,7 @@ func DefaultConfig() Configuration {
 	c.Resolution = "720p"
 	c.FileHosting = "zippyshare"
 	c.Browser = "xdg-open"
+	c.OpenInBrowser = "true"
 	return c
 }
 
@@ -60,6 +62,8 @@ func GetConfig(key string) string {
 		return config.FileHosting
 	case "browser", "Browser":
 		return config.Browser
+	case "open_in_browser", "OpenInBrowser":
+		return config.OpenInBrowser
 	}
 	return ""
 }
@@ -84,6 +88,8 @@ func SetConfig(key string, value string) Configuration {
 		config.Codec = value
 	case "browser", "Browser":
 		config.Browser = value
+	case "open_in_browser", "OpenInBrowser":
+		config.OpenInBrowser = value
 	}
 
 	configWrite, err := json.Marshal(config)
