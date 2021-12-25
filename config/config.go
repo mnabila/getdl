@@ -52,13 +52,13 @@ func GetConfig(key string) string {
 	}
 
 	switch key {
-	case "codec":
+	case "codec", "Codec":
 		return config.Codec
-	case "resolution":
+	case "resolution", "Resolution":
 		return config.Resolution
-	case "file_hosting":
+	case "file_hosting", "FileHosting":
 		return config.FileHosting
-	case "browser":
+	case "browser", "Browser":
 		return config.Browser
 	}
 	return ""
@@ -76,13 +76,13 @@ func SetConfig(key string, value string) Configuration {
 		config = DefaultConfig()
 	}
 	switch key {
-	case "codec":
+	case "codec", "Codec":
 		config.Codec = value
-	case "resolution":
+	case "resolution", "Resolution":
 		config.Resolution = value
-	case "file_hosting":
+	case "file_hosting", "FileHosting":
 		config.Codec = value
-	case "browser":
+	case "browser", "Browser":
 		config.Browser = value
 	}
 

@@ -3,6 +3,19 @@
 gawe golek url download
 
 
+# install
+
+```
+$ make install
+```
+
+# uninstall
+
+```
+$ make uninstall
+```
+
+
 
 # usage
 ```
@@ -38,3 +51,4 @@ Use " [command] --help" for more information about a command.
 - [x] tambah cobra biar enak management commandnya
 - [ ] get direct file download
 - [ ] terintegrasi dengan aria2c
+- [ ] buat konfig per website

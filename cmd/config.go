@@ -3,7 +3,10 @@ package cmd
 import (
 	"fmt"
 	"getdl/config"
+	"os"
+	"reflect"
 	"strings"
+	"text/tabwriter"
 
 	"github.com/spf13/cobra"
 )
@@ -44,15 +47,18 @@ var showConfigCmd = &cobra.Command{
 	Long:  "Print configuration in ~/.config/getdl",
 	Run: func(_ *cobra.Command, _ []string) {
 		separator := strings.Repeat("-", 25)
-		c := config.ReadConfig()
 		fmt.Println(separator)
 		fmt.Println("Getdl Configuration")
 		fmt.Println(separator)
-		fmt.Println("Codec        :", c.Codec)
-		fmt.Println("Resolution   :", c.Resolution)
-		fmt.Println("File Hosting :", c.FileHosting)
-		fmt.Println("Browser      :", c.Browser)
-		fmt.Println(separator)
+
+		reflectValue := reflect.ValueOf(config.ReadConfig())
+		reflectType := reflectValue.Type()
+		writer := tabwriter.NewWriter(os.Stdout, 0, 4, 1, '\t', tabwriter.AlignRight)
+		for i := 0; i < reflectType.NumField(); i++ {
+			fmt.Fprintf(writer, "%s\t: %s\n", reflectType.Field(i).Name, reflectValue.Field(i).Interface())
+		}
+		writer.Flush()
+		fmt.Println()
 	},
 }
 
