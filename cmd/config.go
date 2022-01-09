@@ -32,8 +32,10 @@ var setConfigCmd = &cobra.Command{
 		if len(args) > 1 && len(args) <= 2 {
 			key := args[0]
 			value := args[1]
-			config.SetConfig(key, value)
-
+			if err := config.SetConfig(key, value); err != nil {
+				fmt.Println(err.Error())
+				return
+			}
 			fmt.Println("Update Configuration Success Full")
 			return
 		}
@@ -66,12 +68,22 @@ var configCmd = &cobra.Command{
 	Use:   "config",
 	Short: "Configuration",
 	Long:  "Update or Read Configuration",
-	Run:   func(cmd *cobra.Command, args []string) {},
+	Run: func(cmd *cobra.Command, _ []string) {
+		reset, _ := cmd.Flags().GetBool("reset")
+		if reset {
+			if err := config.ResetConfig(); err != nil {
+				fmt.Println(err.Error())
+				return
+			}
+			fmt.Println("Success Reset Configuration")
+		}
+	},
 }
 
 func init() {
 	configCmd.AddCommand(getConfigCmd)
 	configCmd.AddCommand(setConfigCmd)
 	configCmd.AddCommand(showConfigCmd)
+	configCmd.PersistentFlags().Bool("reset", false, "Restore Default Config")
 	RootCmd.AddCommand(configCmd)
 }

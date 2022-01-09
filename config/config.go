@@ -2,6 +2,7 @@ package config
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/fs"
 	"io/ioutil"
@@ -68,7 +69,7 @@ func GetConfig(key string) string {
 	return ""
 }
 
-func SetConfig(key string, value string) Configuration {
+func SetConfig(key string, value string) error {
 	config := Configuration{}
 
 	configRead, err := ioutil.ReadFile(configPath)
@@ -79,27 +80,40 @@ func SetConfig(key string, value string) Configuration {
 	if err := json.Unmarshal(configRead, &config); err != nil {
 		config = DefaultConfig()
 	}
+
 	switch key {
 	case "codec", "Codec":
 		config.Codec = value
 	case "resolution", "Resolution":
 		config.Resolution = value
-	case "file_hosting", "FileHosting":
-		config.Codec = value
+	case "file_hosting", "FileHosting", "filehosting":
+		config.FileHosting = value
 	case "browser", "Browser":
 		config.Browser = value
-	case "open_in_browser", "OpenInBrowser":
+	case "open_in_browser", "OpenInBrowser", "openinbrowser":
 		config.OpenInBrowser = value
 	}
 
 	configWrite, err := json.Marshal(config)
 	if err != nil {
-		fmt.Println("Error Unable Parse Configuration")
+		return errors.New("error unable parse configuration")
 	}
 
 	if err := ioutil.WriteFile(configPath, configWrite, fs.FileMode(os.O_RDWR)); err != nil {
-		fmt.Println("Error Unable Write Configuration")
+		return errors.New("error unable write configuration")
 	}
 
-	return config
+	return nil
+}
+
+func ResetConfig() error {
+	config := DefaultConfig()
+	configWrite, err := json.Marshal(config)
+	if err != nil {
+		return errors.New("error unable parse configuration")
+	}
+	if err := ioutil.WriteFile(configPath, configWrite, fs.FileMode(os.O_RDWR)); err != nil {
+		return errors.New("error unable write configuration")
+	}
+	return nil
 }

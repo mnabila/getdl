@@ -34,6 +34,7 @@ Available Commands:
   config      Configuration
   get         Get url download
   help        Help about any command
+  version     Print version
 
 Flags:
   -h, --help   help for this command
