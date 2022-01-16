@@ -1,7 +1,6 @@
 package scrape
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
@@ -34,7 +33,6 @@ func Lendrive(link string) Response {
 
 		ld := ListDownload{}
 		ld.Codec = "x265"
-		fmt.Println(h)
 
 		h.DOM.Find("div.soraurlx").Each(func(_ int, s *goquery.Selection) {
 			d := Download{}
