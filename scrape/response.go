@@ -8,7 +8,7 @@ type Response struct {
 }
 
 type ListDownload struct {
-	Codec      string     `json:"tipe"`
+	Codec      string     `json:"codec"`
 	Downloads []Download `json:"downloads"`
 }
 

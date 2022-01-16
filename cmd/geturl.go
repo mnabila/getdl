@@ -40,6 +40,8 @@ func getResponse(u *url.URL) scrape.Response {
 		result = scrape.Doronime(u.String())
 	case strings.Contains(u.Host, "194.163.183.129"):
 		result = scrape.Samehadaku(u.String())
+	case strings.Contains(u.Host, "lendrive"):
+		result = scrape.Lendrive(u.String())
 	}
 	return result
 }

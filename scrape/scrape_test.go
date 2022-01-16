@@ -19,6 +19,7 @@ func TestSamehadaku(t *testing.T) {
 	result := scrape.Samehadaku("https://194.163.183.129/saihate-no-paladin-episode-10/")
 	tojson, _ := json.Marshal(result)
 	t.Log(string(tojson))
+	writeToJson(tojson, "samehadaku")
 
 }
 
@@ -26,6 +27,7 @@ func TestOploverz(t *testing.T) {
 	result := scrape.Oploverz("https://oploverz.fan/kimetsu-no-yaiba-s2-episode-03-subtitle-indonesia/")
 	tojson, _ := json.Marshal(result)
 	t.Log(string(tojson))
+	writeToJson(tojson, "oploverz")
 
 }
 
@@ -34,6 +36,14 @@ func TestDoronime(t *testing.T) {
 	tojson, _ := json.Marshal(result)
 	t.Log(string(tojson))
 	writeToJson(tojson, "doronime")
+
+}
+
+func TestLendrive(t *testing.T) {
+	result := scrape.Lendrive("https://lendrive.web.id/akebi-chan-no-sailor-fuku-ep-01-dual-subs-x265-hevc-subtitle-indonesia-english/")
+	tojson, _ := json.Marshal(result)
+	t.Log(string(tojson))
+	writeToJson(tojson, "lendrive")
 
 }
 
