@@ -3,7 +3,7 @@ package scrape_test
 import (
 	"encoding/json"
 	"fmt"
-	"getdl/scrape"
+	"getdl/internal/scrape"
 	"log"
 	"os"
 	"testing"
@@ -47,9 +47,11 @@ func TestLendrive(t *testing.T) {
 
 }
 
-// func TestEgao(t *testing.T) {
-// 	result := scrape.BypassEgao("https://egao.in?id=eyJpdiI6IkFZUVZ2RjZGVWFTdFI5RlhoNDBlTGc9PSIsInZhbHVlIjoiRWtwZGNKRjArNTBYTnUrMHpVcjVlQT09IiwibWFjIjoiNGM0MGRmZTQ2ZWZhNDViN2ZlNzg3NDg4YWU3NTllZDNjODYxNWE5MGJhYzNjZjZjYzkyZWJiOGRkMjk1MmFlMyJ9")
-// 	t.Log(result)
-//
-// }
-//
+func TestMirrored(t *testing.T) {
+	result := scrape.Mirrored("https://www.mirrored.to/files/Y15EKT9F/[_LENDRIVE_]_Tensai_Ouji_no_Akaji_Kokka_Saisei_Jutsu_-_08_[720p_HEVC][Dualsubs].mkv_links")
+	// tojson, _ := json.Marshal(result)
+	// t.Log(string(tojson))
+	// writeToJson(tojson, "lendrive")
+	t.Log(result)
+
+}

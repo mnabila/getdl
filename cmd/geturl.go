@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"getdl/config"
-	"getdl/scrape"
+	"getdl/internal/scrape"
 	"net/url"
 	"os/exec"
 	"strings"
