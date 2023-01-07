@@ -5,7 +5,7 @@ type Configuration struct {
 	Resolution    string       `yaml:"resolution"`
 	FileHosting   string       `yaml:"file_hosting"`
 	Browser       string       `yaml:"browser"`
-	OpenInBrowser bool        `yaml:"open_in_browser"`
+	OpenInBrowser bool         `yaml:"open_in_browser"`
 	Domain        DomainScrape `yaml:"domain"`
 }
 
@@ -14,4 +14,5 @@ type DomainScrape struct {
 	Samehadaku string `yaml:"samehadaku"`
 	Lendrive   string `yaml:"lendrive"`
 	Oploverz   string `yaml:"oploverz"`
+	Animekompi string `yaml:"animekompi"`
 }

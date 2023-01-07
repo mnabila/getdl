@@ -14,7 +14,6 @@ func Doronime(link string) (out ScrapeResponse) {
 	// get title
 	c.OnHTML("h5.Content__title", func(h *colly.HTMLElement) {
 		out.Title = h.Text
-
 	})
 
 	// get description

@@ -36,3 +36,8 @@ func TestSamehadaku(t *testing.T) {
 	result := scrape.Samehadaku("https://194.163.183.129/saihate-no-paladin-episode-10/")
 	writeToJson(result, "samehadaku")
 }
+
+func TestAnimeKompi(t *testing.T) {
+	result := scrape.Animekompi("https://animekompi.net/hyouken-no-majutsushi-ga-sekai-wo-suberu-episode-01-subtitle-indonesia/")
+	writeToJson(result, "animekompi")
+}

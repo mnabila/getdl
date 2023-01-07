@@ -8,6 +8,7 @@ gawe golek url download
 2. Samehadaku
 3. Doronime
 4. Lendrive
+5. Animekompi
 
 # install
 
@@ -34,6 +35,7 @@ domain:
   samehadaku: "65.108.132.145"
   lendrive: "lendrive.web.id"
   oploverz: "oploverz.co.in"
+  animekompi: "animekompi.net"
 ```
 
 # todo
