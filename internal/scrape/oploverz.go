@@ -7,46 +7,43 @@ import (
 	"github.com/gocolly/colly/v2"
 )
 
-func Oploverz(link string) Response {
+func Oploverz(link string) (out ScrapeResponse) {
 	c := colly.NewCollector()
-	result := Response{}
-	result.Url = link
+	out.Url = link
 
 	// get title
 	c.OnHTML("h1.entry-title", func(h *colly.HTMLElement) {
-		result.Title = h.Text
+		out.Title = h.Text
 
 	})
 
 	// get description
 	c.OnHTML("div.desc", func(h *colly.HTMLElement) {
 		desc := strings.ReplaceAll(h.Text, "\t", "")
-		desc = strings.ReplaceAll(desc, "\n", "")
-		result.Description = desc
+		out.Description = strings.ReplaceAll(desc, "\n", "")
 	})
 
 	// get download links
 	c.OnHTML("div.soraddlx", func(h *colly.HTMLElement) {
 		h.DOM.Each(func(_ int, s *goquery.Selection) {
-			ld := ListDownload{}
-			ld.Codec = s.Find("h3").Text()
+			codec := s.Find("h3").Text()
+			if codec == "mkv" {
+				codec = "x264"
+			}
 
 			s.Find("div.soraurlx").Each(func(_ int, s *goquery.Selection) {
-
-				d := Download{}
-				d.Resolution = s.Find("strong").Text()
-
+				resolution := s.Find("strong").Text()
 				s.Find("a").Each(func(_ int, s *goquery.Selection) {
-
-					d.Links = append(d.Links, FileHosting{strings.ToLower(s.Text()), s.AttrOr("href", "")})
+					out.Downloads = append(out.Downloads, Download{
+						Codec:       codec,
+						Resolution:  resolution,
+						FileHosting: strings.ToLower(s.Text()),
+						UrlDownload: s.AttrOr("href", ""),
+					})
 				})
-
-				ld.Downloads = append(ld.Downloads, d)
 			})
-			result.Downloads = append(result.Downloads, ld)
-
 		})
 	})
 	c.Visit(link)
-	return result
+	return
 }

@@ -7,14 +7,13 @@ import (
 	"github.com/gocolly/colly/v2"
 )
 
-func Lendrive(link string) Response {
+func Lendrive(link string) (out ScrapeResponse) {
 	c := colly.NewCollector()
-	result := Response{}
-	result.Url = link
+	out.Url = link
 
 	// get title
 	c.OnHTML("h1.entry-title", func(h *colly.HTMLElement) {
-		result.Title = h.Text
+		out.Title = h.Text
 
 	})
 
@@ -22,7 +21,7 @@ func Lendrive(link string) Response {
 	c.OnHTML("div.desc", func(h *colly.HTMLElement) {
 		desc := strings.ReplaceAll(h.Text, "\t", "")
 		desc = strings.ReplaceAll(desc, "\n", "")
-		result.Description = desc
+		out.Description = desc
 	})
 
 	// get urldownload
@@ -31,24 +30,21 @@ func Lendrive(link string) Response {
 			return
 		}
 
-		ld := ListDownload{}
-		ld.Codec = "x265"
-
 		h.DOM.Find("div.soraurlx").Each(func(_ int, s *goquery.Selection) {
-			d := Download{}
-			res := strings.Split(s.Find("strong").Text(), "|")[0]
-			d.Resolution = strings.TrimSpace(res)
+			resolution := strings.Split(s.Find("strong").Text(), "|")[0]
+			resolution = strings.TrimSpace(resolution)
 
 			s.Find("a").Each(func(_ int, s *goquery.Selection) {
-
-				d.Links = append(d.Links, FileHosting{strings.ToLower(s.Text()), s.AttrOr("href", "")})
+				out.Downloads = append(out.Downloads, Download{
+					Codec:       "x265",
+					Resolution:  resolution,
+					FileHosting: strings.ToLower(s.Text()),
+					UrlDownload: s.AttrOr("href", ""),
+				})
 			})
-			ld.Downloads = append(ld.Downloads, d)
 		})
-		result.Downloads = append(result.Downloads, ld)
 	})
 
 	c.Visit(link)
-	return result
-
+	return
 }
