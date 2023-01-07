@@ -19,7 +19,8 @@ func Samehadaku(link string) (out ScrapeResponse) {
 
 	// get description
 	c.OnHTML("div.desc div", func(h *colly.HTMLElement) {
-		out.Description = strings.Replace(h.Text, "\n", "", 1)
+		desc := strings.ReplaceAll(h.Text, "\n", "")
+		out.Description = strings.TrimSpace(desc)
 	})
 
 	// get download links

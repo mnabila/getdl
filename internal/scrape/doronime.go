@@ -46,13 +46,12 @@ func Doronime(link string) (out ScrapeResponse) {
 			resolution := strings.ToLower(s.Find("div.Download__group-title").Text())
 			s.Find("div.Download__link").Each(func(_ int, s *goquery.Selection) {
 				s.Find("a").Each(func(_ int, s *goquery.Selection) {
-					download := Download{
+					out.Downloads = append(out.Downloads, Download{
 						Codec:       "x265",
 						Resolution:  resolution,
 						FileHosting: strings.ToLower(s.Find("span").First().Text()),
 						UrlDownload: s.AttrOr("href", ""),
-					}
-					out.Downloads = append(out.Downloads, download)
+					})
 				})
 			})
 		})

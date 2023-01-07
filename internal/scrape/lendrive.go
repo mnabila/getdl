@@ -14,14 +14,13 @@ func Lendrive(link string) (out ScrapeResponse) {
 	// get title
 	c.OnHTML("h1.entry-title", func(h *colly.HTMLElement) {
 		out.Title = h.Text
-
 	})
 
 	// get description
 	c.OnHTML("div.desc", func(h *colly.HTMLElement) {
 		desc := strings.ReplaceAll(h.Text, "\t", "")
 		desc = strings.ReplaceAll(desc, "\n", "")
-		out.Description = desc
+		out.Description = strings.TrimSpace(desc)
 	})
 
 	// get urldownload
