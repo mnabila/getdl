@@ -28,24 +28,23 @@ var GetUrlDownload = &cobra.Command{
 			return
 		}
 
-		website := args[0]
-
-		u, err := url.Parse(website)
+		u, err := url.Parse(args[0])
 		if err != nil {
 			fmt.Println("Url Tidak Valid")
 		}
-		data := getResponse(u, conf)
+
+		response, webConfig := getResponse(u, conf.Website)
 
 		raw, _ := cmd.Flags().GetBool("raw")
 		if raw {
-			rawJson, _ := json.Marshal(data)
+			rawJson, _ := json.Marshal(response)
 			fmt.Println(string(rawJson))
 			return
 		}
 
-		urlDownload := getUrlFile(data.Downloads, conf)
+		urlDownload := getResult(response, webConfig)
 
-		fmt.Println("[ Open URL ] >> ", website)
+		fmt.Println("[ Open URL ] >> ", response.Url)
 		fmt.Println("[ Result   ] >> ", urlDownload)
 
 		if urlDownload != "" && conf.OpenInBrowser {
@@ -57,31 +56,39 @@ var GetUrlDownload = &cobra.Command{
 	},
 }
 
-func getResponse(u *url.URL, c *config.Configuration) (result scrape.ScrapeResponse) {
-	switch u.Host {
-	case c.Domain.Oploverz:
-		result = scrape.Oploverz(u.String())
-	case c.Domain.Doronime:
-		result = scrape.Doronime(u.String())
-	case c.Domain.Samehadaku:
-		result = scrape.Samehadaku(u.String())
-	case c.Domain.Lendrive:
-		result = scrape.Lendrive(u.String())
-	}
-	return result
-}
-
-func getUrlFile(downloads []scrape.Download, c *config.Configuration) (result string) {
-	for _, d := range downloads {
-		if strings.Contains(d.Codec, c.Codec) {
-			if strings.Contains(d.Resolution, c.Resolution) {
-				if strings.Contains(d.FileHosting, c.FileHosting) {
-					return d.UrlDownload
-				}
+func getResponse(u *url.URL, website []config.WebConfig) (response scrape.ScrapeResponse, web config.WebConfig) {
+	for _, web = range website {
+		if web.Domain == u.Host {
+			switch web.Name {
+			case "oploverz":
+				return scrape.Oploverz(u.String()), web
+			case "doronime":
+				return scrape.Doronime(u.String()), web
+			case "samehadaku":
+				return scrape.Samehadaku(u.String()), web
+			case "lendrive":
+				return scrape.Lendrive(u.String()), web
+			case "animekompi":
+				return scrape.Lendrive(u.String()), web
 			}
 		}
 	}
 	return
+}
+
+func getResult(data scrape.ScrapeResponse, conf config.WebConfig) string {
+	for _, download := range data.Downloads {
+		if download.Codec == conf.Codec {
+			if strings.Contains(download.Resolution, conf.Resolution) {
+				for _, hosting := range conf.FileHosting {
+					if strings.Contains(download.FileHosting, hosting) {
+						return download.UrlDownload
+					}
+				}
+			}
+		}
+	}
+	return ""
 }
 
 func init() {

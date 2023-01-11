@@ -1,0 +1,34 @@
+browser: xdg-open
+open_in_browser: true
+website:
+  - name: doronime
+    domain: doronime.id
+    codec: x265
+    resolution: 720
+    file_hosting:
+      - zippy
+  - name: samehadaku
+    domain: 65.108.132.145
+    codec: x265
+    resolution: 720
+    file_hosting:
+      - zippy
+  - name: lendrive
+    domain: lendrive.web.id
+    codec: x265
+    resolution: 720
+    file_hosting:
+      - zippy
+      - drive
+  - name: oploverz
+    domain: oploverz.co.in
+    codec: x265
+    resolution: 720
+    file_hosting:
+      - zippy
+  - name: animekompi
+    domain: animekompi.net
+    codec: x265
+    resolution: 720
+    file_hosting:
+      - zippy
