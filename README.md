@@ -22,22 +22,6 @@ $ make install
 $ make uninstall
 ```
 
-# example configuration
-
-```
-code: "265"
-resolution: "720"
-file_hosting: "zippy"
-browser: "xdg-open"
-open_in_browser: true
-domain:
-  doronime: "doronime.id"
-  samehadaku: "65.108.132.145"
-  lendrive: "lendrive.web.id"
-  oploverz: "oploverz.co.in"
-  animekompi: "animekompi.net"
-```
-
 # todo
 
 - [x] scrape data (judul, deskripsi, link download)
