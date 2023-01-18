@@ -57,19 +57,21 @@ var GetUrlDownload = &cobra.Command{
 }
 
 func getResponse(u *url.URL, website []config.WebConfig) (response scrape.ScrapeResponse, web config.WebConfig) {
-	for _, web = range website {
-		if web.Domain == u.Host {
-			switch web.Name {
-			case "oploverz":
-				return scrape.Oploverz(u.String()), web
-			case "doronime":
-				return scrape.Doronime(u.String()), web
-			case "samehadaku":
-				return scrape.Samehadaku(u.String()), web
-			case "lendrive":
-				return scrape.Lendrive(u.String()), web
-			case "animekompi":
-				return scrape.Lendrive(u.String()), web
+	for _, web := range website {
+		for _, domain := range web.Domain {
+			if u.Host == domain {
+				switch web.Name {
+				case "oploverz":
+					return scrape.Oploverz(u.String()), web
+				case "doronime":
+					return scrape.Doronime(u.String()), web
+				case "samehadaku":
+					return scrape.Samehadaku(u.String()), web
+				case "lendrive":
+					return scrape.Lendrive(u.String()), web
+				case "animekompi":
+					return scrape.Lendrive(u.String()), web
+				}
 			}
 		}
 	}
