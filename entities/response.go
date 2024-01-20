@@ -1,4 +1,4 @@
-package scrape
+package entities
 
 type ScrapeResponse struct {
 	Url         string     `json:"url"`

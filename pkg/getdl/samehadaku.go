@@ -1,13 +1,14 @@
-package scrape
+package getdl
 
 import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/gocolly/colly/v2"
+	"github.com/mnabila/getdl/entities"
 )
 
-func Samehadaku(link string) (out ScrapeResponse) {
+func Samehadaku(link string) (out entities.ScrapeResponse) {
 	c := colly.NewCollector()
 	out.Url = link
 
@@ -34,7 +35,7 @@ func Samehadaku(link string) (out ScrapeResponse) {
 			s.Find("li").Each(func(_ int, s *goquery.Selection) {
 				resolution := s.Find("strong").Text()
 				s.Find("a").Each(func(_ int, s *goquery.Selection) {
-					out.Downloads = append(out.Downloads, Download{
+					out.Downloads = append(out.Downloads, entities.Download{
 						Codec:       codec,
 						Resolution:  resolution,
 						FileHosting: strings.ToLower(s.Text()),
@@ -44,6 +45,8 @@ func Samehadaku(link string) (out ScrapeResponse) {
 			})
 		})
 	})
+
 	c.Visit(link)
+
 	return
 }

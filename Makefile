@@ -1,5 +1,5 @@
 VERSION = $(shell git describe --tags)
-FLAG = "-X getdl/cmd.Version=$(VERSION)"
+FLAG = "-X main.Version=$(VERSION)"
 
 build:
 	go build -ldflags $(FLAG)

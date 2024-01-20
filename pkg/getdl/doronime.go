@@ -1,13 +1,14 @@
-package scrape
+package getdl
 
 import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/gocolly/colly/v2"
+	"github.com/mnabila/getdl/entities"
 )
 
-func Doronime(link string) (out ScrapeResponse) {
+func Doronime(link string) (out entities.ScrapeResponse) {
 	c := colly.NewCollector()
 	out.Url = link
 
@@ -30,7 +31,7 @@ func Doronime(link string) (out ScrapeResponse) {
 			resolution := strings.ToLower(s.Find("div.Download__group-title").Text())
 			s.Find("div.Download__link").Each(func(_ int, s *goquery.Selection) {
 				s.Find("a").Each(func(_ int, s *goquery.Selection) {
-					download := Download{
+					download := entities.Download{
 						Codec:       "x264",
 						Resolution:  resolution,
 						FileHosting: strings.ToLower(s.Find("span").First().Text()),
@@ -46,7 +47,7 @@ func Doronime(link string) (out ScrapeResponse) {
 			resolution := strings.ToLower(s.Find("div.Download__group-title").Text())
 			s.Find("div.Download__link").Each(func(_ int, s *goquery.Selection) {
 				s.Find("a").Each(func(_ int, s *goquery.Selection) {
-					out.Downloads = append(out.Downloads, Download{
+					out.Downloads = append(out.Downloads, entities.Download{
 						Codec:       "x265",
 						Resolution:  resolution,
 						FileHosting: strings.ToLower(s.Find("span").First().Text()),
@@ -58,5 +59,6 @@ func Doronime(link string) (out ScrapeResponse) {
 	})
 
 	c.Visit(link)
+
 	return
 }

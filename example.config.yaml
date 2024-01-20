@@ -37,3 +37,10 @@ website:
     resolution: 720
     file_hosting:
       - drive
+  - name: extonan
+    domain: 
+      - extonan.id
+    codec: x265
+    resolution: 720
+    file_hosting:
+      - drive
