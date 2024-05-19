@@ -15,7 +15,6 @@ func Samehadaku(link string) (out entities.ScrapeResponse) {
 	// get title
 	c.OnHTML("h1.entry-title", func(h *colly.HTMLElement) {
 		out.Title = h.Text
-
 	})
 
 	// get description
@@ -33,7 +32,7 @@ func Samehadaku(link string) (out entities.ScrapeResponse) {
 			}
 
 			s.Find("li").Each(func(_ int, s *goquery.Selection) {
-				resolution := s.Find("strong").Text()
+				resolution := strings.TrimSpace(s.Find("strong").Text())
 				s.Find("a").Each(func(_ int, s *goquery.Selection) {
 					out.Downloads = append(out.Downloads, entities.Download{
 						Codec:       codec,

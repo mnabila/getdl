@@ -15,7 +15,7 @@ import (
 )
 
 var UseGetUrlDownload = &cobra.Command{
-	Use: "get [url]",
+	Use:   "get [url]",
 	Short: "Get download links from website",
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) <= 0 || len(args) >= 2 {
@@ -32,6 +32,7 @@ var UseGetUrlDownload = &cobra.Command{
 		u, err := url.Parse(args[0])
 		if err != nil {
 			fmt.Println("Url Tidak Valid")
+			return
 		}
 
 		response, webConfig := getResponse(u, conf.Website)
@@ -80,7 +81,7 @@ func getResponse(u *url.URL, website []config.WebConfig) (response entities.Scra
 
 func getResult(data entities.ScrapeResponse, conf config.WebConfig) string {
 	for _, download := range data.Downloads {
-		if download.Codec == conf.Codec {
+		if strings.Contains(download.Codec, conf.Codec) {
 			if strings.Contains(download.Resolution, conf.Resolution) {
 				for _, hosting := range conf.FileHosting {
 					if strings.Contains(download.FileHosting, strings.ToLower(hosting)) {
